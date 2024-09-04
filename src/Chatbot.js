@@ -17,7 +17,6 @@ const Chatbot = () => {
   const [activeTab, setActiveTab] = useState('Home');
   const [messages, setMessages] = useState([]);
   const [userInput, setUserInput] = useState('');
-  const [selectedFile, setSelectedFile] = useState(null);
   const [visibleFAQIndex, setVisibleFAQIndex] = useState(null);
   const [isChatbotOpen, setIsChatbotOpen] = useState(true);
   const [currentQuestion, setCurrentQuestion] = useState(0);
@@ -34,7 +33,6 @@ const Chatbot = () => {
   const [showForm, setShowForm] = useState(false);
  
   const chatEndRef = useRef(null);
-  const ws = useRef(null);
  
   // FAQs for Home and Help tabs
   const homeFAQs = [
@@ -122,7 +120,7 @@ const Chatbot = () => {
       console.log('Chatbot is closed');
       resetChat(); // Reset the chat when chatbot is closed
     }
-  }, [isChatbotOpen, messages, preliminaryMessageSent, t]);
+  }, [isChatbotOpen, messages, preliminaryMessageSent, t, handlePreliminaryQuestions, appendMessage]);
   
   const handlePreliminaryQuestions = (isInitialCall = false) => {
     const questionIndex = currentQuestion;
@@ -250,14 +248,14 @@ const Chatbot = () => {
     }
   };
  
-  const handleAPIResponse = (data) => {
-    console.log('API Response Data:', data); // Log API response data
-    if (data.message) {
-      appendMessage('bot', data.message, true);
-    } else {
-      appendMessage('bot', t("Received an unexpected response."), true);
-    }
-  };
+  // const handleAPIResponse = (data) => {
+  //   console.log('API Response Data:', data); // Log API response data
+  //   if (data.message) {
+  //     appendMessage('bot', data.message, true);
+  //   } else {
+  //     appendMessage('bot', t("Received an unexpected response."), true);
+  //   }
+  // };
  
   const handleUserResponse = (response) => {
     const updatedDetails = { ...userDetails };
@@ -287,7 +285,7 @@ const Chatbot = () => {
     handlePreliminaryQuestions();
   }
  
-  const handleFileClick = () => document.getElementById('file-input').click();
+  // const handleFileClick = () => document.getElementById('file-input').click();
  
   const handleFAQToggle = (index) => setVisibleFAQIndex(prevIndex => (prevIndex === index ? null : index));
  
@@ -306,7 +304,7 @@ const Chatbot = () => {
     <div className={`chatbot-popup ${isChatbotOpen ? 'open' : 'closed'}`}>
       <div className="chat-header">
         <img src={clogo} alt="logo" />
-        <img src={bestwrk} className="new-image" alt="New Image" />
+        <img src={bestwrk} className="new-image" />
         <div className='call' onClick={openWebsite}></div>
 
         <button id="close-btn" onClick={handleCloseChatbot}>&times;</button>

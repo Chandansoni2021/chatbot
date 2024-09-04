@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import chat from './Image/chat.png';
 import './App.css';
 import Chatbot from './Chatbot';
 import '@fortawesome/fontawesome-free/css/all.min.css';

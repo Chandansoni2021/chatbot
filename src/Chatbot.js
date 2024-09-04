@@ -274,13 +274,9 @@ const Chatbot = () => {
     if (e.key === 'Enter') sendMessage();
   };
 
+
  
-  const handleFormSubmit = async () => {
-    setShowForm(false);
-    handlePreliminaryQuestions();
-  }
- 
-  const handleFileClick = () => document.getElementById('file-input').click();
+
  
   const handleFAQToggle = (index) => setVisibleFAQIndex(prevIndex => (prevIndex === index ? null : index));
  

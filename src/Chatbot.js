@@ -33,6 +33,7 @@ const Chatbot = () => {
   const [showForm, setShowForm] = useState(false);
  
   const chatEndRef = useRef(null);
+  const ws = useRef(null);
  
   // FAQs for Home and Help tabs
   const homeFAQs = [
@@ -248,14 +249,14 @@ const Chatbot = () => {
     }
   };
  
-  // const handleAPIResponse = (data) => {
-  //   console.log('API Response Data:', data); // Log API response data
-  //   if (data.message) {
-  //     appendMessage('bot', data.message, true);
-  //   } else {
-  //     appendMessage('bot', t("Received an unexpected response."), true);
-  //   }
-  // };
+  const handleAPIResponse = (data) => {
+    console.log('API Response Data:', data); // Log API response data
+    if (data.message) {
+      appendMessage('bot', data.message, true);
+    } else {
+      appendMessage('bot', t("Received an unexpected response."), true);
+    }
+  };
  
   const handleUserResponse = (response) => {
     const updatedDetails = { ...userDetails };
@@ -272,14 +273,20 @@ const Chatbot = () => {
   const handleKeyPress = (e) => {
     if (e.key === 'Enter') sendMessage();
   };
-
+ 
+  const handleFileChange = (e) => {
+    if (e.target.files.length > 0) {
+      setSelectedFile(e.target.files[0]);
+      appendMessage('user', `${t('Uploaded file')}: ${e.target.files[0].name}`);
+    }
+  };
  
   const handleFormSubmit = async () => {
     setShowForm(false);
     handlePreliminaryQuestions();
   }
  
-  // const handleFileClick = () => document.getElementById('file-input').click();
+  const handleFileClick = () => document.getElementById('file-input').click();
  
   const handleFAQToggle = (index) => setVisibleFAQIndex(prevIndex => (prevIndex === index ? null : index));
  
@@ -298,7 +305,7 @@ const Chatbot = () => {
     <div className={`chatbot-popup ${isChatbotOpen ? 'open' : 'closed'}`}>
       <div className="chat-header">
         <img src={clogo} alt="logo" />
-        <img src={bestwrk} className="new-image" />
+        <img src={bestwrk} className="new-image" alt="New Image" />
         <div className='call' onClick={openWebsite}></div>
 
         <button id="close-btn" onClick={handleCloseChatbot}>&times;</button>
@@ -377,6 +384,12 @@ const Chatbot = () => {
             value={userInput}
             onChange={handleInputChange}
             onKeyPress={handleKeyPress}
+          />
+          <input
+            type="file"
+            id="file-input"
+            style={{ display: 'none' }}
+            onChange={handleFileChange}
           />
           <button id="send-btn" onClick={sendMessage}>
               <i className="fas fa-paper-plane"></i>

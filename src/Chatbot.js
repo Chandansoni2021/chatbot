@@ -17,7 +17,7 @@ const Chatbot = () => {
   const [activeTab, setActiveTab] = useState('Home');
   const [messages, setMessages] = useState([]);
   const [userInput, setUserInput] = useState('');
-  const [selectedFile, setSelectedFile] = useState(null);
+  
   const [visibleFAQIndex, setVisibleFAQIndex] = useState(null);
   const [isChatbotOpen, setIsChatbotOpen] = useState(true);
   const [currentQuestion, setCurrentQuestion] = useState(0);
@@ -34,7 +34,7 @@ const Chatbot = () => {
   const [showForm, setShowForm] = useState(false);
  
   const chatEndRef = useRef(null);
-  const ws = useRef(null);
+
  
   // FAQs for Home and Help tabs
   const homeFAQs = [
@@ -250,14 +250,7 @@ const Chatbot = () => {
     }
   };
  
-  const handleAPIResponse = (data) => {
-    console.log('API Response Data:', data); // Log API response data
-    if (data.message) {
-      appendMessage('bot', data.message, true);
-    } else {
-      appendMessage('bot', t("Received an unexpected response."), true);
-    }
-  };
+
  
   const handleUserResponse = (response) => {
     const updatedDetails = { ...userDetails };

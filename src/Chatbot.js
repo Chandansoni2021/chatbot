@@ -120,7 +120,7 @@ const Chatbot = () => {
       console.log('Chatbot is closed');
       resetChat(); // Reset the chat when chatbot is closed
     }
-  }, [isChatbotOpen, messages, preliminaryMessageSent, t, handlePreliminaryQuestions, appendMessage]);
+  }, [isChatbotOpen, messages, preliminaryMessageSent, t]);
   
   const handlePreliminaryQuestions = (isInitialCall = false) => {
     const questionIndex = currentQuestion;
@@ -272,13 +272,7 @@ const Chatbot = () => {
   const handleKeyPress = (e) => {
     if (e.key === 'Enter') sendMessage();
   };
- 
-  const handleFileChange = (e) => {
-    if (e.target.files.length > 0) {
-      setSelectedFile(e.target.files[0]);
-      appendMessage('user', `${t('Uploaded file')}: ${e.target.files[0].name}`);
-    }
-  };
+
  
   const handleFormSubmit = async () => {
     setShowForm(false);
@@ -383,12 +377,6 @@ const Chatbot = () => {
             value={userInput}
             onChange={handleInputChange}
             onKeyPress={handleKeyPress}
-          />
-          <input
-            type="file"
-            id="file-input"
-            style={{ display: 'none' }}
-            onChange={handleFileChange}
           />
           <button id="send-btn" onClick={sendMessage}>
               <i className="fas fa-paper-plane"></i>

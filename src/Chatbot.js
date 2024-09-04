@@ -273,13 +273,7 @@ const Chatbot = () => {
   const handleKeyPress = (e) => {
     if (e.key === 'Enter') sendMessage();
   };
- 
-  const handleFileChange = (e) => {
-    if (e.target.files.length > 0) {
-      setSelectedFile(e.target.files[0]);
-      appendMessage('user', `${t('Uploaded file')}: ${e.target.files[0].name}`);
-    }
-  };
+
  
   const handleFormSubmit = async () => {
     setShowForm(false);
